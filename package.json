@@ -1,0 +1,20 @@
+{
+  "name": "mtg-logger",
+  "version": "1.0.0",
+  "description": "App for logging matches of MTG and aggregating statistics",
+  "main": "server.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/charlespierce/mtg-logger.git"
+  },
+  "author": "Charles Pierce",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/charlespierce/mtg-logger/issues"
+  },
+  "homepage": "https://github.com/charlespierce/mtg-logger#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
