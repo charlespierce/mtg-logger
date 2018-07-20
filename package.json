@@ -2,8 +2,9 @@
   "name": "mtg-logger",
   "version": "1.0.0",
   "description": "App for logging matches of MTG and aggregating statistics",
-  "main": "server.js",
-  "scripts": {},
+  "scripts": {
+    "start": "node backend/server.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/charlespierce/mtg-logger.git"
