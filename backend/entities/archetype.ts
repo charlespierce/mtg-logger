@@ -12,4 +12,18 @@ export class Archetype extends BaseEntity {
 
     @ManyToOne(type => Format)
     format!: Format;
+
+    static async findOrCreate(format: Format, name: string) {
+        let archetype = await Archetype.findOne({ where: { format, name }});
+
+        if (!archetype) {
+            archetype = new Archetype();
+            archetype.name = name;
+            archetype.format = format;
+
+            await archetype.save();
+        }
+
+        return archetype;
+    }
 }

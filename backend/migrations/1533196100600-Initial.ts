@@ -25,6 +25,9 @@ export class Initial1533196100600 implements MigrationInterface {
         await queryRunner.query(`INSERT INTO "temporary_game"("id", "first_turn", "result", "final_turn", "sideboarded", "starting_hand", "pre_game_scry", "opponent_starting_hand", "opponent_pre_game_scry", "notes", "matchId") SELECT "id", "first_turn", "result", "final_turn", "sideboarded", "starting_hand", "pre_game_scry", "opponent_starting_hand", "opponent_pre_game_scry", "notes", "matchId" FROM "game"`);
         await queryRunner.query(`DROP TABLE "game"`);
         await queryRunner.query(`ALTER TABLE "temporary_game" RENAME TO "game"`);
+
+        // Supported Formats
+        await queryRunner.query(`INSERT INTO "format" ("name") VALUES ("Standard"), ("Modern"), ("Legacy"), ("Vintage")`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {

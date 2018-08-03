@@ -1,7 +1,15 @@
 import * as express from 'express';
 import * as wrap from 'express-async-handler';
+import { Format } from '../entities/format';
 
-export const formats = express.Router();
+export const router = express.Router();
 
-formats.get('/', wrap(async (req, res) => {
+router.get('/', wrap(async (req, res) => {
+    const formats = await Format.find({
+        order: {
+            name: "ASC"
+        }
+    });
+
+    res.send(JSON.stringify(formats));
 }));

@@ -11,7 +11,7 @@ export class Session extends BaseEntity {
     @Column('text')
     title!: string;
 
-    @Column({ type: 'date', nullable: true })
+    @Column({ type: 'datetime', nullable: true })
     session_date?: Date;
 
     @ManyToOne(type => Archetype, { nullable: true })
