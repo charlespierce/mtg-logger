@@ -35,5 +35,5 @@ export class Game extends BaseEntity {
     notes?: string;
 
     @ManyToOne(type => Match, match => match.games)
-    match!: Match;
+    match!: Promise<Match>;
 }

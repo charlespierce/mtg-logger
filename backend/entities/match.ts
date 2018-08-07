@@ -17,20 +17,20 @@ export class Match extends BaseEntity {
     match_date?: Date;
 
     @ManyToOne(type => Archetype)
-    archetype!: Archetype;
+    archetype!: Promise<Archetype>;
 
     @ManyToOne(type => Archetype)
-    opponent_archtype!: Archetype;
+    opponent_archtype!: Promise<Archetype>;
 
     @ManyToOne(type => Format)
-    format!: Format;
+    format!: Promise<Format>;
 
     @ManyToOne(type => Opponent)
-    opponent!: Opponent;
+    opponent!: Promise<Opponent>;
 
     @ManyToOne(type => Session, session => session.matches)
-    session!: Session;
+    session!: Promise<Session>;
 
     @OneToMany(type => Game, game => game.match)
-    games!: Game[];
+    games!: Promise<Game[]>;
 }

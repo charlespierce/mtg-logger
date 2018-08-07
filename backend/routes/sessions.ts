@@ -16,14 +16,17 @@ interface SessionResponse extends SessionRequest {
     matchCount: number;
 }
 
-function mapSessionToResponse(session: Session): SessionResponse {
+async function mapSessionToResponse(session: Session): Promise<SessionResponse> {
+    const archetype = await session.archetype;
+    const format = await session.format;
+    const matches = await session.matches;
     return {
         id: session.id,
         title: session.title,
         session_date: session.session_date && session.session_date.toLocaleDateString('en-US'),
-        archetype: session.archetype && session.archetype.name,
-        format: session.format && session.format.name,
-        matchCount: session.matches ? session.matches.length + 1 : 0
+        archetype: archetype && archetype.name,
+        format: format && format.name,
+        matchCount: matches ? matches.length : 0
     };
 }
 
@@ -38,10 +41,10 @@ async function applyRequestToSession(request: SessionRequest, session: Session) 
         const format = await Format.findOne(request.format);
 
         if (format) {
-            session.format = format;
+            session.format = Promise.resolve(format);
 
             if (request.archetype) {
-                session.archetype = await Archetype.findOrCreate(format, request.archetype);
+                session.archetype = Archetype.findOrCreate(format, request.archetype);
             }
         }
     }
@@ -57,7 +60,8 @@ router.get('/', wrap(async (req, res) => {
         }
     });
 
-    res.send(JSON.stringify(sessions.map(mapSessionToResponse)));
+    const response = await Promise.all(sessions.map(mapSessionToResponse));
+    res.send(JSON.stringify(response));
 }));
 
 router.post('/', wrap(async (req, res) => {
@@ -66,15 +70,16 @@ router.post('/', wrap(async (req, res) => {
     await applyRequestToSession(req.body, session);
     await session.save();
 
-    res.status(201)
-        .send(JSON.stringify(mapSessionToResponse(session)));
+    const response = await mapSessionToResponse(session);
+    res.status(201).send(JSON.stringify(response));
 }));
 
 router.get('/:id', wrap(async (req, res) => {
     const session = await Session.findOne(req.params.id);
 
     if (session) {
-        res.send(JSON.stringify(mapSessionToResponse(session)));
+        const response = await mapSessionToResponse(session);
+        res.send(JSON.stringify(response));
     } else {
         res.sendStatus(404);
     }
@@ -87,7 +92,8 @@ router.put('/:id', wrap(async (req, res) => {
         await applyRequestToSession(req.body, session);
         await session.save();
 
-        res.send(JSON.stringify(mapSessionToResponse(session)));
+        const response = await mapSessionToResponse(session);
+        res.send(JSON.stringify(response));
     } else {
         res.sendStatus(404);
     }
