@@ -11,5 +11,6 @@ router.get('/', wrap(async (req, res) => {
         }
     });
 
-    res.send(JSON.stringify(opponents));
+    const list = opponents.map(o => o.name);
+    res.send(JSON.stringify(list));
 }));

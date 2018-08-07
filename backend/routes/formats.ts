@@ -11,5 +11,6 @@ router.get('/', wrap(async (req, res) => {
         }
     });
 
-    res.send(JSON.stringify(formats));
+    const list = formats.map(f => f.name);
+    res.send(JSON.stringify(list));
 }));
