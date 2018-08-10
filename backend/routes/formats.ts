@@ -4,7 +4,7 @@ import { Format } from '../entities/format';
 
 export const router = express.Router();
 
-router.get('/', wrap(async (req, res) => {
+router.get('/formats', wrap(async (req, res) => {
     const formats = await Format.find({
         order: {
             name: "ASC"

@@ -1,25 +1,16 @@
 import * as express from 'express';
 import * as wrap from 'express-async-handler';
+import { SessionRequest } from './common/requests';
+import { SessionResponse } from './common/responses';
 import { Archetype } from '../entities/archetype';
 import { Format } from '../entities/format';
 import { Session } from '../entities/session';
-
-interface SessionRequest {
-    title: string;
-    session_date?: string;
-    archetype?: string;
-    format?: string;
-}
-
-interface SessionResponse extends SessionRequest {
-    id: number;
-    matchCount: number;
-}
 
 async function mapSessionToResponse(session: Session): Promise<SessionResponse> {
     const archetype = await session.archetype;
     const format = await session.format;
     const matches = await session.matches;
+
     return {
         id: session.id,
         title: session.title,
@@ -52,30 +43,30 @@ async function applyRequestToSession(request: SessionRequest, session: Session) 
 
 export const router = express.Router();
 
-router.get('/', wrap(async (req, res) => {
+router.get('/sessions', wrap(async (req, res) => {
     const sessions = await Session.find({
         relations: ['archetype', 'format', 'matches'],
-        order: {
-            session_date: 'DESC'
-        }
+        order: { session_date: 'DESC' }
     });
 
     const response = await Promise.all(sessions.map(mapSessionToResponse));
     res.send(JSON.stringify(response));
 }));
 
-router.post('/', wrap(async (req, res) => {
+router.post('/sessions', wrap(async (req, res) => {
+    const request: SessionRequest = req.body
     const session = new Session();
 
-    await applyRequestToSession(req.body, session);
+    await applyRequestToSession(request, session);
     await session.save();
 
-    const response = await mapSessionToResponse(session);
-    res.status(201).send(JSON.stringify(response));
+    res.sendStatus(201);
 }));
 
-router.get('/:id', wrap(async (req, res) => {
-    const session = await Session.findOne(req.params.id);
+router.get('/sessions/:id', wrap(async (req, res) => {
+    const session = await Session.findOne(req.params.id, {
+        relations: ['archetype', 'format', 'matches']
+    });
 
     if (session) {
         const response = await mapSessionToResponse(session);
@@ -85,15 +76,27 @@ router.get('/:id', wrap(async (req, res) => {
     }
 }));
 
-router.put('/:id', wrap(async (req, res) => {
+router.put('/sessions/:id', wrap(async (req, res) => {
+    const request: SessionRequest = req.body;
     const session = await Session.findOne(req.params.id);
 
     if (session) {
-        await applyRequestToSession(req.body, session);
+        await applyRequestToSession(request, session);
         await session.save();
 
-        const response = await mapSessionToResponse(session);
-        res.send(JSON.stringify(response));
+        res.sendStatus(204);
+    } else {
+        res.sendStatus(404);
+    }
+}));
+
+router.delete('/sessions/:id', wrap(async (req, res) => {
+    const session = await Session.findOne(req.params.id);
+
+    if (session) {
+        await session.remove();
+
+        res.sendStatus(204);
     } else {
         res.sendStatus(404);
     }

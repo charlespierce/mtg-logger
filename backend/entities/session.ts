@@ -14,11 +14,11 @@ export class Session extends BaseEntity {
     @Column({ type: 'datetime', nullable: true })
     session_date?: Date;
 
-    @ManyToOne(type => Archetype, { nullable: true })
-    archetype!: Promise<Archetype | undefined>;
+    @ManyToOne(type => Archetype)
+    archetype!: Promise<Archetype>;
 
-    @ManyToOne(type => Format, { nullable: true })
-    format!: Promise<Format | undefined>;
+    @ManyToOne(type => Format)
+    format!: Promise<Format>;
 
     @OneToMany(type => Match, match => match.session)
     matches!: Promise<Match[]>;

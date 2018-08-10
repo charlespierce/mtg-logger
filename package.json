@@ -4,6 +4,7 @@
   "description": "App for logging matches of MTG and aggregating statistics",
   "scripts": {
     "ts:build": "tsc",
+    "ts:clean": "rm -rf build",
     "orm:migrate": "typeorm migration:generate -n",
     "start": "npm run ts:build && node build/server.js"
   },

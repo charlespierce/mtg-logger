@@ -4,7 +4,7 @@ import { Opponent } from '../entities/opponent';
 
 export const router = express.Router();
 
-router.get('/', wrap(async (req, res) => {
+router.get('/opponents', wrap(async (req, res) => {
     const opponents = await Opponent.find({
         order: {
             name: "ASC"

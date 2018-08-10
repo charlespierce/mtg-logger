@@ -4,7 +4,7 @@ import { Archetype } from '../entities/archetype';
 
 export const router = express.Router();
 
-router.get('/:format', wrap(async (req, res) => {
+router.get('/archetypes/:format', wrap(async (req, res) => {
     const archetypes = await Archetype.find({
         where: { format: { name: req.params.format } },
         order: { name: "ASC" }
