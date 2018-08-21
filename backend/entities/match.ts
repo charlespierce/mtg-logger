@@ -1,7 +1,5 @@
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Archetype } from './archetype';
 import { Game } from './game';
-import { Opponent } from './opponent';
 import { Session } from './session';
 
 @Entity()
@@ -15,11 +13,11 @@ export class Match extends BaseEntity {
     @Column({ type: 'date', nullable: true })
     match_date?: Date;
 
-    @ManyToOne(type => Opponent, { nullable: true })
-    opponent!: Promise<Opponent>;
+    @Column({ type: 'text', nullable: true, collation: 'NOCASE' })
+    opponent?: string;
 
-    @ManyToOne(type => Archetype, { nullable: true })
-    opponent_archetype!: Promise<Archetype>;
+    @Column({ type: 'text', nullable: true, collation: 'NOCASE' })
+    opponent_archetype?: string;
 
     @ManyToOne(type => Session, session => session.matches)
     session!: Promise<Session>;

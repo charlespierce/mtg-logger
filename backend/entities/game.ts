@@ -1,4 +1,4 @@
-import { BaseEntity, Check, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Result, Scry } from '../constants';
 import { Match } from './match';
 

@@ -1,6 +1,4 @@
-import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Archetype } from './archetype';
-import { Format } from './format';
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Match } from './match';
 
 @Entity()
@@ -8,17 +6,17 @@ export class Session extends BaseEntity {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column('text')
-    title!: string;
+    @Column({ type: 'text', nullable: true })
+    title?: string;
 
     @Column({ type: 'datetime', nullable: true })
     session_date?: Date;
 
-    @ManyToOne(type => Archetype)
-    archetype!: Promise<Archetype>;
+    @Column({ type: 'text', nullable: true, collation: 'NOCASE' })
+    archetype?: string;
 
-    @ManyToOne(type => Format)
-    format!: Promise<Format>;
+    @Column({ type: 'text', nullable: true, collation: 'NOCASE' })
+    format?: string;
 
     @OneToMany(type => Match, match => match.session)
     matches!: Promise<Match[]>;

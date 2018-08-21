@@ -1,16 +1,9 @@
 import * as express from 'express';
 import * as wrap from 'express-async-handler';
-import { Format } from '../entities/format';
+import { getConnection } from 'typeorm';
 
 export const router = express.Router();
 
 router.get('/formats', wrap(async (req, res) => {
-    const formats = await Format.find({
-        order: {
-            name: "ASC"
-        }
-    });
-
-    const list = formats.map(f => f.name);
-    res.send(JSON.stringify(list));
+    res.sendStatus(404);
 }));
