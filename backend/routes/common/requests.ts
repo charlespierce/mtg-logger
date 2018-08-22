@@ -20,8 +20,8 @@ export interface MatchRequest {
 }
 
 export interface SessionRequest {
-    title: string;
+    title?: string;
     session_date?: string;
-    archetype: string;
-    format: string;
+    archetype?: string;
+    format?: string;
 }

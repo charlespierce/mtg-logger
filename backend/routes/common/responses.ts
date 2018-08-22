@@ -29,9 +29,9 @@ export interface MatchSummaryResponse {
 
 export interface SessionResponse {
     id: number;
-    title: string;
+    title?: string;
     session_date?: string;
-    archetype: string;
-    format: string;
+    archetype?: string;
+    format?: string;
     matchCount: number;
 }
