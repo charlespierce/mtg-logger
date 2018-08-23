@@ -17,7 +17,6 @@ export interface MatchDetailResponse {
     opponent_archetype?: string;
     notes?: string;
     match_date?: string;
-    games: GameResponse[];
 }
 
 export interface MatchSummaryResponse {

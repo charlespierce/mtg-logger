@@ -1,8 +1,8 @@
-import * as express from 'express';
+import { Router } from 'express';
 import * as wrap from 'express-async-handler';
 import { getConnection } from 'typeorm';
 
-export const router = express.Router();
+export const router = Router();
 
 type ArchetypeResult = { archetype: string };
 

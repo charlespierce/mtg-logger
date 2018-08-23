@@ -34,6 +34,8 @@ export class Game extends BaseEntity {
     @Column({ type: 'text', nullable: true })
     notes?: string;
 
-    @ManyToOne(type => Match, match => match.games)
+    @ManyToOne(type => Match, match => match.games, { onDelete: 'CASCADE' })
     match!: Promise<Match>;
 }
+
+export type GameUpdateProperties = 'first_turn' | 'result' | 'final_turn' | 'sideboarded' | 'starting_hand' | 'pre_game_scry' | 'opponent_starting_hand' | 'opponent_pre_game_scry' | 'notes';

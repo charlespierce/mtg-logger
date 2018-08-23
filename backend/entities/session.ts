@@ -21,3 +21,5 @@ export class Session extends BaseEntity {
     @OneToMany(type => Match, match => match.session)
     matches!: Promise<Match[]>;
 }
+
+export type SessionUpdateProperties = 'title' | 'session_date' | 'archetype' | 'format';

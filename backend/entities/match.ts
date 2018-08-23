@@ -19,9 +19,11 @@ export class Match extends BaseEntity {
     @Column({ type: 'text', nullable: true, collation: 'NOCASE' })
     opponent_archetype?: string;
 
-    @ManyToOne(type => Session, session => session.matches)
+    @ManyToOne(type => Session, session => session.matches, { onDelete: 'CASCADE' })
     session!: Promise<Session>;
 
     @OneToMany(type => Game, game => game.match)
     games!: Promise<Game[]>;
 }
+
+export type MatchUpdateProperties = 'notes' | 'match_date' | 'opponent' | 'opponent_archetype';

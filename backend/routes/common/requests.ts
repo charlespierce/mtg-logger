@@ -1,5 +1,4 @@
 export interface GameRequest {
-    id?: number;
     first_turn?: boolean;
     result?: number;
     final_turn?: number;
@@ -16,7 +15,6 @@ export interface MatchRequest {
     opponent_archetype?: string;
     notes?: string;
     match_date?: string;
-    games: GameRequest[];
 }
 
 export interface SessionRequest {
