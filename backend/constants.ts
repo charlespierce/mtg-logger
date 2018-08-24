@@ -3,7 +3,7 @@ import { ConnectionOptions } from 'typeorm';
 
 export const CONNECTION_OPTIONS: ConnectionOptions = {
     type: 'sqlite',
-    database: ':memory:',
+    database: path.join(__dirname, '../mtg-logger.db'),
     entities: [ path.join(__dirname, 'entities/*.js') ],
     migrations: [ path.join(__dirname, 'migrations/*.js') ]
 };

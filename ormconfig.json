@@ -1,6 +1,6 @@
 {
     "type": "sqlite",
-    "database": ":memory:",
+    "database": "mtg-logger.db",
     "entities": [
         "build/entities/*.js"
     ],
